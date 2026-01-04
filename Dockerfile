@@ -2,9 +2,9 @@
 FROM node:20-alpine AS frontend-build
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN npm ci
+RUN npm ci --include=dev
 COPY frontend/ ./
-RUN npm run build
+RUN npx vite build
 
 # Production stage
 FROM node:20-alpine AS production
@@ -12,7 +12,7 @@ WORKDIR /app
 
 # Copy backend
 COPY backend/package*.json ./
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
 COPY backend/ ./
 
