@@ -148,7 +148,7 @@ app.delete('/api/bookmarks/:novelId', async (req, res) => {
 
 // Serve frontend for all other routes in production (SPA fallback)
 if (process.env.NODE_ENV === 'production') {
-  app.get('*', (req, res) => {
+  app.get('/{*splat}', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
   });
 }
@@ -157,5 +157,6 @@ if (process.env.NODE_ENV === 'production') {
 connectDB().then(() => {
   app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on http://localhost:${PORT}`);
+  });
   });
 });
